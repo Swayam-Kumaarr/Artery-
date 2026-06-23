@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Phone, ArrowRight, Shield, ChevronDown, CheckCircle, Loader2 } from "lucide-react";
@@ -35,7 +35,43 @@ export default function LoginPage() {
   const [error,       setError]       = useState("");
   const [showCodes,   setShowCodes]   = useState(false);
 
+  const [resendCooldown, setResendCooldown] = useState(0);
+  const [resendLoading, setResendLoading] = useState(false);
+
+  useEffect(() => {
+    if (step !== "otp") return;
+    if (resendCooldown <= 0) return;
+
+    const t = setInterval(() => {
+      setResendCooldown((s) => (s <= 1 ? 0 : s - 1));
+    }, 1000);
+
+    return () => clearInterval(t);
+  }, [step, resendCooldown]);
+
+  const sendOtp = async (opts: { phone: string; countryCode: string }) => {
+    const { phone: phoneDigits, countryCode: cc } = opts;
+
+    if (phoneDigits.length < 10) {
+      throw new Error("Please enter a valid 10-digit number.");
+    }
+
+    if (USE_SUPABASE) {
+      const { supabase } = await import("@/lib/supabase");
+      const { error: sbError } = await supabase.auth.signInWithOtp({
+        phone: `${cc}${phoneDigits}`,
+      });
+      if (sbError) throw sbError;
+    } else {
+      // Mock: simulate OTP send delay in development
+      await new Promise((r) => setTimeout(r, 1000));
+    }
+  };
+
   const handleSendOtp = async () => {
+    // reset resend cooldown when re-sending from phone screen
+    setResendCooldown(0);
+
     if (phone.length < 10) { setError("Please enter a valid 10-digit number."); return; }
     setError(""); setLoading(true);
     try {
@@ -133,6 +169,25 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
+  const handleResend = async () => {
+    if (resendLoading) return;
+    setError("");
+    setResendLoading(true);
+    try {
+      await sendOtp({ phone, countryCode });
+      setResendCooldown(30);
+    } catch (e: any) {
+      setError(e.message ?? "Failed to resend OTP. Please try again.");
+    } finally {
+      setResendLoading(false);
+    }
+  };
+
+  const resendLabel = useMemo(() => {
+    if (resendCooldown <= 0) return "Resend OTP";
+    return `Resend OTP (${resendCooldown}s)`;
+  }, [resendCooldown]);
 
   return (
     <div className="min-h-screen bg-cream flex items-center justify-center px-4 relative overflow-hidden">
@@ -250,6 +305,7 @@ export default function LoginPage() {
           ) : (
             /* ── OTP entry ── */
             <div className="space-y-6">
+              <div className="pt-1" />
               <div>
                 <h1 className="font-serif text-2xl text-ink mb-1">Enter OTP</h1>
                 <p className="text-ink-soft text-sm">
@@ -286,6 +342,25 @@ export default function LoginPage() {
                 onClick={handleVerify}
                 disabled={loading}
                 className="btn-accent w-full h-11 flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                {loading
+                  ? <><Loader2 size={15} className="animate-spin" /> Verifying…</>
+                  : <><CheckCircle size={15} /> Verify & Sign In</>
+                }
+              </button>
+
+              <button
+                type="button"
+                onClick={handleResend}
+                disabled={resendCooldown > 0 || resendLoading}
+                className="w-full text-center text-sm text-ink-faint disabled:opacity-50 disabled:cursor-not-allowed hover:text-accent transition-colors"
+              >
+                {resendLoading ? "Resending…" : resendLabel}
+              </button>
+
+              <button
+                onClick={() => { setStep("phone"); setOtp(["","","","","",""]); setError(""); setResendCooldown(0); }}
+                className="w-full text-center text-sm text-ink-faint hover:text-accent transition-colors"
               >
                 {loading
                   ? <><Loader2 size={15} className="animate-spin" /> Verifying…</>
