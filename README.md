@@ -43,9 +43,10 @@ Rather than replacing artists, Artery uses AI as a communication tool. Customers
 
 ---
 
+```markdown
 ## Project structure
 
-```
+```text
 src/
 ├── app/                  # Next.js App Router — one folder per route
 │   ├── api/              # API routes (generate, auth, orders, Razorpay)
