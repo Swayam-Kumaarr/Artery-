@@ -100,10 +100,11 @@ export function Footer() {
             © {new Date().getFullYear()} ARTERY. All rights reserved. Part of the AI4BHARAT initiative.
           </p>
           <div className="flex items-center gap-6">
-            <Link href="/faq" className="text-ink-faint hover:text-accent text-xs transition-colors">FAQ</Link>
-            <Link href="/support" className="text-ink-faint hover:text-accent text-xs transition-colors">Support</Link>
-            <Link href="/about#rules" className="text-ink-faint hover:text-accent text-xs transition-colors">Community Rules</Link>
-          </div>
+  <Link href="/terms" className="text-ink-faint hover:text-accent text-xs transition-colors">Terms</Link>
+  <Link href="/faq" className="text-ink-faint hover:text-accent text-xs transition-colors">FAQ</Link>
+  <Link href="/support" className="text-ink-faint hover:text-accent text-xs transition-colors">Support</Link>
+  <Link href="/about#rules" className="text-ink-faint hover:text-accent text-xs transition-colors">Community Rules</Link>
+</div>
         </div>
       </div>
     </footer>
