@@ -142,3 +142,226 @@ body {
            bg-[#EAE6DE]/60 px-2.5 py-1 rounded-sm border border-[#EAE6DE];
   }
 }
+
+/* ────────────────────────────────────────────────────────────────
+   Responsive Utilities
+   Append at the end of globals.css
+──────────────────────────────────────────────────────────────── */
+
+/* Large Tablets (≤1024px) */
+@media (max-width: 1024px) {
+  .section-title {
+    @apply text-3xl;
+  }
+
+  .section-body {
+    @apply text-[15px];
+  }
+
+  .btn-accent,
+  .btn-outline {
+    @apply px-6 py-3;
+  }
+
+  .card-warm {
+    @apply p-5;
+  }
+}
+
+/* Tablets (≤768px) */
+@media (max-width: 768px) {
+  html {
+    font-size: 95%;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .section-title {
+    @apply text-2xl leading-snug;
+  }
+
+  .section-body {
+    @apply text-sm leading-7;
+  }
+
+  .section-label {
+    @apply tracking-[0.14em];
+  }
+
+  .btn-accent,
+  .btn-outline {
+    @apply w-full justify-center text-center px-5 py-3;
+  }
+
+  .btn-ghost {
+    @apply w-full text-center;
+  }
+
+  .card-warm {
+    @apply rounded-md p-4;
+  }
+
+  .input-warm {
+    @apply text-sm py-3 px-4;
+  }
+
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+/* Mobile (≤640px) */
+@media (max-width: 640px) {
+  html {
+    font-size: 92%;
+  }
+
+  .section-title {
+    @apply text-2xl;
+  }
+
+  .section-body {
+    @apply text-sm leading-6;
+  }
+
+  .section-label {
+    @apply text-[10px];
+  }
+
+  .tag-pill {
+    @apply text-[10px] px-2 py-0.5;
+  }
+
+  .btn-accent,
+  .btn-outline {
+    @apply text-sm py-3 px-4;
+  }
+
+  .card-warm {
+    @apply p-4;
+  }
+
+  .input-warm {
+    @apply py-2.5 px-3 text-sm;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+}
+
+/* Small Phones (≤480px) */
+@media (max-width: 480px) {
+  html {
+    font-size: 90%;
+  }
+
+  .section-title {
+    @apply text-xl leading-tight;
+  }
+
+  .section-body {
+    @apply text-sm leading-6;
+  }
+
+  .btn-accent,
+  .btn-outline,
+  .btn-ghost {
+    @apply w-full text-center;
+  }
+
+  .card-warm {
+    @apply rounded-lg p-3;
+  }
+
+  .input-warm {
+    @apply text-sm px-3 py-2;
+  }
+
+  .tag-pill {
+    @apply text-[9px];
+  }
+}
+
+/* Extra Small Devices (≤360px) */
+@media (max-width: 360px) {
+  html {
+    font-size: 88%;
+  }
+
+  .section-title {
+    @apply text-lg;
+  }
+
+  .section-body {
+    @apply text-xs leading-5;
+  }
+
+  .btn-accent,
+  .btn-outline {
+    @apply py-2.5 px-3 text-xs;
+  }
+
+  .input-warm {
+    @apply text-xs;
+  }
+}
+
+/* Landscape Phones */
+@media (max-height: 500px) and (orientation: landscape) {
+  .section-title {
+    @apply text-2xl;
+  }
+
+  .section-body {
+    @apply text-sm;
+  }
+
+  .btn-accent,
+  .btn-outline {
+    @apply py-2;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Touch Devices */
+@media (hover: none) {
+  .btn-accent:hover,
+  .btn-outline:hover,
+  .btn-ghost:hover {
+    transform: none;
+  }
+
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    touch-action: manipulation;
+  }
+}
+
