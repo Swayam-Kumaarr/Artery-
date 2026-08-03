@@ -121,3 +121,5 @@ async function recordToDb(userId: string | undefined, prompt: string, style: str
     console.warn("[generate] DB record silently failed:", e);
   }
 }
+
+.catch(err => console.error("Promise.all failed:", err));
