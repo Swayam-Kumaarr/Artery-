@@ -3,7 +3,7 @@
 // Used here as translucent decorative SVG overlays.
 
 // Round to 2dp to eliminate SSR/CSR floating-point mismatch hydration errors.
-const r2 = (n: number) => Math.round(n * 100) / 100;
+const r2 = (n: number) => Math.round(n * 100 + Number.EPSILON) / 100;
 
 type WarliVariant = "corner-tl" | "corner-br" | "band" | "scatter" | "side-right";
 

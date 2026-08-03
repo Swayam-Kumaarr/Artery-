@@ -211,7 +211,7 @@ export default function CartPage() {
                 {subscriptionDiscount > 0 && (
                   <div className="flex justify-between text-accent">
                     <span className="flex items-center gap-1">
-                      <Tag size={12} /> {user?.subscription} discount ({Math.round(subscriptionDiscount * 100)}%)
+                      <Tag size={12} /> {user?.subscription} discount ({Math.round(subscriptionDiscount * 100 + Number.EPSILON)}%)
                     </span>
                     <span>−{formatCurrency(discount)}</span>
                   </div>

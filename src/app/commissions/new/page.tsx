@@ -107,7 +107,7 @@ function CommissionNewInner() {
         title,
         description,
         style,
-        budgetMin:      parseInt(budgetMin) || 0,
+        budgetMin:      parseInt(budgetMin, 10) || 0,
         budgetMax:      parseInt(budgetMax) || 0,
         deadlineDays:   parseInt(deadlineDays) || 21,
         imageUrl,
